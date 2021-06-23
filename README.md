@@ -1,27 +1,70 @@
-# AngularElements
+# Angular Elements - Calculator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
 
-## Development server
+## 1. Install Angular elements
+```
+ng add @angular/elements
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 2. Install Concat
+```
+npm install concat
+```
 
-## Code scaffolding
+## 3. Create a script to concat files
+```
+const concat = require('concat');
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+(async function build() {
+    const files = [
+        './dist/angular-elements/runtime.js',
+        './dist/angular-elements/polyfills.js',
+        './dist/angular-elements/main.js'
+    ]
 
-## Build
+    await concat(files, './dist/angular-elements/calculator.js');
+})()
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## 4. Remove bootstrap and add entryComponents in app.module
+```
+...
+imports: [
+  BrowserModule,
+  AppRoutingModule,
+  FormsModule
+],
+providers: [],
+entryComponents: [CalculatorComponent],
+bootstrap: []
+...
 
-## Running unit tests
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 5. Implement DoBootstrap interface and use ngDoBootstrap method to create the element
+```
+...
+export class AppModule implements DoBootstrap {
 
-## Running end-to-end tests
+  constructor(private injector: Injector) { }
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice.
+  ngDoBootstrap() {
+    const element = createCustomElement(CalculatorComponent, { injector: this.injector });
+    customElements.define('app-calculator', element)
+  }
+}
+```
 
-## Further help
+## 6. Build
+```
+  1. ng build --prod --output-hashing none
+  2. node build-script
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Demo
+```
+<app-calculator firstnumber="57"
+                secondnumber="105"
+                operator="*"></app-calculator>
+```
