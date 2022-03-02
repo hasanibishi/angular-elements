@@ -32,12 +32,11 @@ const concat = require('concat');
 ...
 imports: [
   BrowserModule,
-  AppRoutingModule,
   FormsModule
 ],
 providers: [],
 entryComponents: [CalculatorComponent],
-bootstrap: []
+// bootstrap: [AppComponent]
 ...
 
 ```
@@ -63,8 +62,18 @@ export class AppModule implements DoBootstrap {
 ```
 
 ## Demo
+
+### HTML - (input)
 ```
 <app-calculator firstnumber="57"
                 secondnumber="105"
                 operator="*"></app-calculator>
+```
+
+### JS - (output)
+```
+document.querySelector('app-calculator')
+  .addEventListener('getResult', (result) => {
+    console.log(result)
+  });
 ```
