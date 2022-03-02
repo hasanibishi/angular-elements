@@ -1,7 +1,24 @@
 div {
+    border: solid;
+    width: 500px;
+    margin: auto;
+    padding: 3rem;
     text-align: center;
 
     span {
         font-size: 68px;
+    }
+
+    button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        font-size: 16px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #16a31c;
+        }
     }
 }

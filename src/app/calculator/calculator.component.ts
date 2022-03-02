@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
@@ -10,10 +10,11 @@ export class CalculatorComponent implements OnInit {
   private _firstNumber!: string;
   private _secondNumber!: string;
   private _operator!: string;
+  result!: number;
+  @Output('getResult') outputResult = new EventEmitter<string>()
 
   @Input('firstnumber') set firstNumber(value: string) {
     this._firstNumber = value;
-    this.calculate();
   };
 
   get firstNumber() {
@@ -22,7 +23,6 @@ export class CalculatorComponent implements OnInit {
 
   @Input('secondnumber') set secondNumber(value: string) {
     this._secondNumber = value;
-    this.calculate();
   };
 
   get secondNumber() {
@@ -30,19 +30,12 @@ export class CalculatorComponent implements OnInit {
   }
 
   @Input() set operator(value: string) {
-    if (!value) value = '+';
-
-    if (value === '+' || value === '-' || value === '*' || value === '/') {
-      this._operator = value;
-      this.calculate();
-    }
+    this._operator = value;
   };
 
   get operator() {
     return this._operator;
   }
-
-  result: number = 0;
 
   constructor() { }
 
@@ -72,6 +65,12 @@ export class CalculatorComponent implements OnInit {
           this.result = Number(this.firstNumber) + Number(this.secondNumber);
           break;
       }
+
+      this.outputResult.emit(this.result.toString());
+    }
+
+    else {
+      alert('Please add the first number and second number!')
     }
   }
 }

@@ -1,5 +1,8 @@
-<app-calculator firstnumber="57"
-                secondnumber="105"
-                operator="*"></app-calculator>
+<div>
+    <h1>Below is a demo Calculator</h1>
 
-<router-outlet></router-outlet>
+    <app-calculator firstnumber="2"
+                    secondnumber="4"
+                    operator="*"
+                    (getResult)="getResult($event)"></app-calculator>
+</div>
